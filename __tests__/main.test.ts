@@ -6,6 +6,9 @@ test('Parses markdown', async () => {
         if (e) throw e
         var checked = await checks( data )
         await expect(checked).not.toBeNull()
+        await expect(Object.keys(checked).length).toBe(4)
+        await expect(Object.values(checked)[0]).toBe(true)
+        await expect(Object.values(checked)[3]).toBe(false)
     })
 })
 
