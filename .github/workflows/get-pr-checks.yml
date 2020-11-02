@@ -7,6 +7,4 @@ jobs:
     steps:
       - uses: JJ/pull-request-checks-action@releases/v1
       - name: Check output
-        with:
-          CHECKED: {{ $checked }}
-        run: echo ${CHECKED}
+        run: echo ${checked}
