@@ -15,14 +15,11 @@ jobs:
               core.setFailed("Only available for pull requests")
             }
             let body = context.payload.pull_request.body
-            console.log( body )
             let match = checklist.exec(body)
             let index = 1
             while (match != null) {
-              console.log(match)
               let name = match[2].length > 1 ? match[2] : "CHECKBOX_"+index
               let value = match[1] ? true : false
-              console.log( name + "=" + value )
               core.exportVariable( name, value)
               core.setOutput( name, value)
               match = checklist.exec(body)
