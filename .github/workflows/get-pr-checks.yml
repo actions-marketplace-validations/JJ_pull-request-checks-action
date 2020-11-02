@@ -10,7 +10,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+(.+?)\.\s+/gm
+            const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+([A-Z]+)/gm
             if ( !context.payload.pull_request ) {
               core.setFailed("Only available for pull requests")
             }
