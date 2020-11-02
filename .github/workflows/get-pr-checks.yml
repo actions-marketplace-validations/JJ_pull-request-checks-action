@@ -5,4 +5,4 @@ jobs:
   get-checks: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: JJ/pull-request-checks-actions@v1
+      - uses: JJ/pull-request-checks-actions@releases/v1
