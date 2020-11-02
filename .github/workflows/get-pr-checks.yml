@@ -5,7 +5,30 @@ jobs:
   get-checks: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-      - name: Check output
-        run: echo ${checked}
+      - name: Checks body
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            if ( !context.payload.pull_request ) {
+              core.setFailed("Only available for pull requests")
+            }
+            console.log( context.payload.pull_request )
+            const body: string = context.payload.pull_request.body!
+            core.debug(`Got ${body}`)
+            const checked = await checks( body )
+            core.exportVariable('checked', checked )
+            core.setOutput('checked',checked)
+
+            // used function
+            export async function checks(body: string): Promise<{[id: string]: boolean}> {
+              return new Promise(() => {
+                const checked: { [id: string] : boolean} = {}
+                let match = checklist.exec(body)
+                while (match != null) {
+                  checked[match[2]] = match[1]?true:false
+                  match = checklist.exec(body)
+                }
+                return match
+              })
+            }
