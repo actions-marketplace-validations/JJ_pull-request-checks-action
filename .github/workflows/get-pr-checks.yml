@@ -13,22 +13,15 @@ jobs:
             if ( !context.payload.pull_request ) {
               core.setFailed("Only available for pull requests")
             }
-            console.log( context.payload.pull_request )
             console.log( context.payload.pull_request.body )
             core.debug("Got ${context.payload.pull_request.body}")
-            /* const checked = await checks( body )
+            const body = context.payload.pull_request.body
+            const checked: { [id: string] : boolean} = {}
+            let match = checklist.exec(body)
+            while (match != null) {
+              checked[match[2]] = match[1]?true:false
+              match = checklist.exec(body)
+            }
+            console.log(checked)
             core.exportVariable('checked', checked )
             core.setOutput('checked',checked)
-
-            // used function
-            export async function checks(body: string): Promise<{[id: string]: boolean}> {
-              return new Promise(() => {
-                const checked: { [id: string] : boolean} = {}
-                let match = checklist.exec(body)
-                while (match != null) {
-                  checked[match[2]] = match[1]?true:false
-                  match = checklist.exec(body)
-                }
-                return match
-              })
-            } */
