@@ -5,5 +5,8 @@ jobs:
   get-checks: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
+      - uses: JJ/pull-request-checks-action@releases/v1
+      - name: Check output
+        with:
+          CHECKED: {{ $checked }}
+        run: echo ${CHECKED}
