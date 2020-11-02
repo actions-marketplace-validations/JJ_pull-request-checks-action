@@ -17,7 +17,7 @@ jobs:
             let body = context.payload.pull_request.body
             console.log( body )
             let match = checklist.exec(body)
-            let index: int = 1
+            let index = 1
             while (match != null) {
               const name: string = match[2] ?? "CHECKBOX${index}"
               const value: boolean = match[1] ? true : false
