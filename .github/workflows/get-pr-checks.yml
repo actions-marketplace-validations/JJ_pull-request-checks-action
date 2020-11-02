@@ -20,7 +20,7 @@ jobs:
             let index = 1
             while (match != null) {
               console.log(match)
-              let name = match[2].length > 1 ? match[2] : "CHECKBOX${index}"
+              let name = match[2].length > 1 ? match[2] : "CHECKBOX_"+index
               let value = match[1] ? true : false
               console.log( name + "=" + value )
               core.exportVariable( name, value)
