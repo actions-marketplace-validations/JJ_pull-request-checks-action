@@ -14,7 +14,6 @@ jobs:
               core.setFailed("Only available for pull requests")
             }
             console.log( context.payload.pull_request.body )
-//            const body = context.payload.pull_request.body
             const checked: { [id: string] : boolean} = {}
             let match = checklist.exec(context.payload.pull_request.body)
             while (match != null) {
