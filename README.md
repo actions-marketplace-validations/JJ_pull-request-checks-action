@@ -1,14 +1,11 @@
-# Get checklist from the body of a PR
+# Get results of a checklist from the body of a pull request
+ 
+Sometimes, the body of a pull request contains 
 
-
-## Validate (from original)
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
+```
+- [X] ONE: Checks this.
+- [x] Check that. 
+- [ ] Does not check this.
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-
+We'll try to export that to variables, and also set to output.
