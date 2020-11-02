@@ -14,7 +14,7 @@ jobs:
             if ( !context.payload.pull_request ) {
               core.setFailed("Only available for pull requests")
             }
-            const body: string = context.payload.pull_request.body!
+            let body = context.payload.pull_request.body
             console.log( body )
             let checked = {}
             let match = checklist.exec(body)
