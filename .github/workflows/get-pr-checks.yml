@@ -1,4 +1,4 @@
-name: 'get-pr-checks'
+name: Gets boxes checked
 on: [pull_request]
 
 jobs:
@@ -10,17 +10,22 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+([A-Z]+)/gm
+            const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+([A-Z]*):?/gm
             if ( !context.payload.pull_request ) {
               core.setFailed("Only available for pull requests")
             }
             let body = context.payload.pull_request.body
             console.log( body )
-            let checked = {}
             let match = checklist.exec(body)
+            let index: int = 1
             while (match != null) {
-              checked[match[2]] = match[1]?true:false
+              const name: string = match[2] ?? "CHECKBOX${index}"
+              const value: boolean = match[1] ? true : false
+              console.log( name + "=" + value )
+              core.exportVariable( name, value)
+              core.setOutput( name, value)
               match = checklist.exec(body)
+              index++
             }
-            console.log("::set-output name=checked::${checked}")
-
+      - name: Shows result
+        run: echo ${GITHUB_ENV}
