@@ -14,8 +14,8 @@ jobs:
               core.setFailed("Only available for pull requests")
             }
             console.log( context.payload.pull_request )
-            const body: string = context.payload.pull_request.body!
-            core.debug(`Got ${body}`)
+            /* const body: string = context.payload.pull_request.body
+            core.debug("Got ${body}")
             const checked = await checks( body )
             core.exportVariable('checked', checked )
             core.setOutput('checked',checked)
@@ -31,4 +31,4 @@ jobs:
                 }
                 return match
               })
-            }
+            } */
