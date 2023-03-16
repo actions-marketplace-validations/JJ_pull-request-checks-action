@@ -1,4 +1,4 @@
-name: Gets boxes checked
+  name: Gets boxes checked
 on: [pull_request]
 
 jobs:
@@ -6,24 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checks body
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+([A-Z]*):?/gm
-            if ( !context.payload.pull_request ) {
-              core.setFailed("Only available for pull requests")
-            }
-            let body = context.payload.pull_request.body
-            let match = checklist.exec(body)
-            let index = 1
-            while (match != null) {
-              let name = match[2].length > 1 ? match[2] : "CHECKBOX_"+index
-              let value = match[1] ? true : false
-              core.exportVariable( name, value)
-              core.setOutput( name, value)
-              match = checklist.exec(body)
-              index++
-            }
+        uses: JJ/pull-request-checks-action@main
       - name: Shows result
         run: echo ${GITHUB_ENV}
