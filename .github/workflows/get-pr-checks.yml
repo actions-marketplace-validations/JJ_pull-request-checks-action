@@ -11,4 +11,4 @@ jobs:
       - name: Shows result
         env:
           OUTPUTS: ${{join(steps.pr_body_checks.outputs.*, '\n')}}
-        run: echo ${OUTPUTS}
+        run: echo OUTPUTS && echo META
