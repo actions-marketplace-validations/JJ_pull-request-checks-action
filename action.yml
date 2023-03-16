@@ -2,5 +2,5 @@ name: 'check-list-extract'
 description: 'Extracts check list from pull request bodies'
 author: 'JJ Merelo'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
