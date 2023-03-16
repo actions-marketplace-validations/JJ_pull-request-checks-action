@@ -1,6 +1,41 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 2321:
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checks = void 0;
+const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+(.+?)\.\s+/gm;
+function checks(body) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise(() => {
+            const checked = {};
+            let match = checklist.exec(body);
+            while (match != null) {
+                checked[match[2]] = match[1] ? true : false;
+                match = checklist.exec(body);
+            }
+            return checked;
+        });
+    });
+}
+exports.checks = checks;
+
+
+/***/ }),
+
 /***/ 3109:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -8,7 +43,11 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -37,22 +76,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+const checks_1 = __nccwpck_require__(2321);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const context = github.context;
         try {
-            if (!context.payload.pull_request) {
-                core.setFailed("Only available for pull requests");
+            if (context.payload.pull_request !== null &&
+                context.payload.pull_request !== undefined) {
+                if ('body' in context.payload.pull_request &&
+                    context.payload.pull_request.body !== null &&
+                    context.payload.pull_request.body !== undefined) {
+                    const body = context.payload.pull_request.body;
+                    core.debug(`Got ${body}`);
+                    const checked = yield (0, checks_1.checks)(body);
+                    core.exportVariable('checked', checked);
+                    core.setOutput('checked', checked);
+                }
+                else {
+                    core.setFailed('No body to check or anything else');
+                }
             }
-            console.log(context.payload.pull_request);
-            //        let body: string = context.payload.pull_request.body!
-            //        core.debug(`Got ${body}`)
-            //        const checked = await checks( body )
-            //        core.exportVariable('checked', checked )
-            //        core.setOutput('checked',checked)
+            else {
+                core.setFailed('Only available for pull requests');
+            }
         }
         catch (error) {
-            core.setFailed(error.message);
+            if (error instanceof Error) {
+                core.setFailed(error === null || error === void 0 ? void 0 : error.message);
+            }
+            else {
+                core.setFailed(String(error));
+            }
         }
     });
 }
