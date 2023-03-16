@@ -13,7 +13,37 @@ This will be exported to github action variables, and also set as step output. T
 ## Use
 
 Check  [the used workflow](.github/workflows/get-pr-checks.html) for
-an example
+an example; or this:
+
+```yaml
+name: Obtain values for checklist
+on: [pull_request]
+
+jobs:
+  get-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verifies checklist in PR body
+        id: pr_body_checks
+        uses: JJ/pull-request-checks-action@main
+      - name: Shows result
+        run: echo $CONTRIBUTING && echo $check0
+```
+
+This would act on this [pull request template](.github/PULL_REQUEST_TEMPLATE.md):
+
+```markdown
+- [ ] This PR refers to issue <!-- insert #issue here -->
+- [ ] CONTRIBUTING: I have checked out the [guide for contributors](CONTRIBUTING.md).
+```
+
+And create an output and environment variable `check0` for the first item, another `CONTRIBUTING` for the second item. The action just prints the values of the environment variables, you can also use it to fail the flow like this:
+
+```yaml
+      - name: Stops if not checked
+        if: ${{ steps.pr_body_checks.outputs.CONTRIBUTING == false}}
+        run: echo "Please read CONTRIBUTING.md" && exit 1
+```
 
 ## History
 
