@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Verifies checklist in PR body
         id: pr_body_checks
-        uses: JJ/pull-request-checks-action@main
+        uses: JJ/pull-request-checks-action@v3
       - name: Shows result
         run: echo $CONTRIBUTING && echo $check0
 ```
@@ -48,5 +48,6 @@ And create an output and environment variable `check0` for the first item, anoth
 ## History
 
 * `release/v1`: first real release
-* `v1`:_ re-release, but barely working
+* `v1`:_starting to work again
 * `v2`: uses labels for checks, works.
+* `v3`: branding and documentation improvements, releasing for real
