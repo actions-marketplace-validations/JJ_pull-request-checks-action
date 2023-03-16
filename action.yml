@@ -1,6 +1,9 @@
 name: 'check-list-extract'
 description: 'Extracts check list from pull request bodies'
 author: 'JJ Merelo'
+branding:
+  icon: 'check-square'
+  color: 'green'
 runs:
   using: 'node16'
   main: 'dist/index.js'
