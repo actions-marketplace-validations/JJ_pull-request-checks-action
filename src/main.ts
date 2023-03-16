@@ -17,7 +17,7 @@ function run(): void {
         const body: string = context.payload.pull_request.body
         const checked: {[id: string]: boolean} = checks(body)
         for (const i in checked) {
-          console.debug(i, checked[i])
+          core.info(`${i} → ${checked[i]}`)
           core.exportVariable(i, checked[i])
           core.setOutput(i, checked[i])
         }
