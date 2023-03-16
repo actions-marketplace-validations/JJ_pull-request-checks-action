@@ -10,6 +10,11 @@ Sometimes, the body of a pull request contains
 
 This will be exported to github action variables, and also set as step output.
 
+## Use
+
+Check  [the used workflow](.github/workflows/get-pr-checks.html) for
+an example
+
 ## History
 
 * `v1`: first real release
