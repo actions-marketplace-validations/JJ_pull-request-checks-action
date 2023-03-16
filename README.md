@@ -8,7 +8,7 @@ Sometimes, the body of a pull request contains
 - [ ] Does not check this.
 ```
 
-This will be exported to github action variables, and also set as step output.
+This will be exported to github action variables, and also set as step output. The outputs will have the name of the label if it exists (`ONE`, in this case) or `check`+ index (starting with 0) otherwise. This one, for instance, will create the variables `ONE`, `checks1` and `checks2`; the first two of them will be set to `true`, the last one to `false`.
 
 ## Use
 
@@ -17,4 +17,6 @@ an example
 
 ## History
 
-* `v1`: first real release
+* `release/v1`: first real release
+* `v1`:_ re-release, but barely working
+* `v2`: uses labels for checks, works.
