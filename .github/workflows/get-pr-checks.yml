@@ -2,7 +2,7 @@
 on: [pull_request]
 
 jobs:
-  get-checks: # make sure build/ci work properly
+  get-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checks body
