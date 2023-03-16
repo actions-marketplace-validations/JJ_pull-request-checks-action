@@ -1,4 +1,4 @@
-name: Gets boxes checked
+name: Obtain values for checklist
 on: [pull_request]
 
 jobs:
@@ -9,6 +9,4 @@ jobs:
         id: pr_body_checks
         uses: JJ/pull-request-checks-action@main
       - name: Shows result
-        env:
-          OUTPUTS: ${{join(steps.pr_body_checks.outputs.*, '\n')}}
-        run: echo $OUTPUTS && echo $CONTRIBUTING && echo $check0
+        run: echo $CONTRIBUTING && echo $check0
