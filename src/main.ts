@@ -8,9 +8,9 @@ async function run(): Promise<void> {
     if (!context.payload.pull_request) {
       core.setFailed('Only available for pull requests')
     }
-    const body: string = context.payload.pull_request.body!
+    const body: string = context.payload.pull_request.body?
     core.debug(`Got ${body}`)
-    const checked = await checks(body)
+    const checked: { [id: string] : boolean} = await checks(body)
     core.exportVariable('checked', checked)
     core.setOutput('checked', checked)
   } catch (error: any) {
