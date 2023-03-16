@@ -1,6 +1,8 @@
 const checklist = /\s*-\s+\[\s*([xX]?)\s*\]\s+(.+?)\.\s+/gm
 
-export async function checks(body: string): Promise<{[id: string]: boolean}> {
+export async function checks(
+  body: NonNullable<string>
+): Promise<{[id: string]: boolean}> {
   return new Promise(() => {
     const checked: {[id: string]: boolean} = {}
     let match = checklist.exec(body)
